@@ -31,8 +31,8 @@ app.use(fileUpload({
 
 //enables cors
 app.use(cors({
-  'allowedHeaders': ['sessionId', 'Content-Type'],
-  'exposedHeaders': ['sessionId'],
+  'allowedHeaders': ['authorization', 'Content-Type'],
+  'exposedHeaders': ['authorization'],
   'origin': '*',
   'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
   'preflightContinue': false

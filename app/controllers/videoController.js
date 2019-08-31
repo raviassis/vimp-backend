@@ -22,7 +22,7 @@ exports.validate = (method) => {
                 }),
                 check('videoUrl', 'VideoUrl must be entered').exists(),
                 check('duration', 'Duration must be entered').exists(),
-                check('duration', 'Duration format not valid. Format valid 00:00:00').custom((value) => {
+                check('duration', 'Duration format not valid. Format valid hh:mm:ss').custom((value) => {
                     return typeof(value) === "string" &&
                             value.match(/\d\d:\d\d:\d\d/g); 
                 }),
