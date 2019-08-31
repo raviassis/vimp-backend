@@ -57,7 +57,8 @@ exports.post = (req, res, next) => {
 
 
     const nameFile = `poster_${Date.now()}.${format}`;
-    const dest = path.join(__dirname,'../../public/images/videos', nameFile);
+    const posterPath = path.join(process.cwd(),'datafile/video_poster');
+    const dest = path.join(posterPath, nameFile);
 
     Video.create({
         name: body.name,
@@ -67,6 +68,9 @@ exports.post = (req, res, next) => {
         description: body.description,
         duration: body.duration, 
     }).then((video) => {
+        if ( !fs.existsSync(posterPath) ) {
+            fs.mkdirSync(posterPath);
+        }
         fs.renameSync(file.tempFilePath, dest, (err) => {
             if(err) throw err;
             else console.log("File Saved");

@@ -2,6 +2,8 @@ require("dotenv-safe").config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var fs = require('fs');
+var rimraf = require('rimraf');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
@@ -24,9 +26,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+const dataFilePath = path.join(process.cwd(),'datafile/');
+if(!fs.existsSync(dataFilePath)){
+  fs.mkdirSync(dataFilePath);
+}
+
+const tempDir = path.join(process.cwd(), 'tmp/');
+if( fs.existsSync(tempDir) ){
+  rimraf.sync(tempDir);
+}
+fs.mkdirSync(tempDir);
+
 app.use(fileUpload({
   useTempFiles : true,
-  tempFileDir : '/tmp/'
+  tempFileDir : tempDir
 }));
 
 //enables cors
